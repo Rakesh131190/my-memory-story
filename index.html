@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Video Story</title>
+    <style>
+        * { box-sizing: border-box; }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Georgia', serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* 1. Video Background */
+        #video-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        /* 2. Overlay for readability */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.3); 
+            z-index: -1;
+        }
+
+        /* 3. Scenes Layout */
+        .scene {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10%;
+        }
+
+        .scene-script {
+            flex: 1;
+            color: white;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+            padding-right: 40px;
+            animation: fadeIn 2s ease;
+            transition: transform 0.5s ease;
+        }
+
+        .scene:hover .scene-script {
+            transform: translateX(10px);
+        }
+
+        .scene-script h1 { font-size: 3rem; margin-bottom: 10px; }
+        .scene-script p { font-size: 1.2rem; line-height: 1.6; }
+
+        /* Updated Image Container: NO CROPPING */
+        .scene-image-container {
+            width: 500px;
+            height: 300px;
+            overflow: hidden; 
+            border: 2px solid;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5); /* Background color if image doesn't fill the box */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .scene-image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            /* 'contain' ensures the whole image (head & sides) is visible */
+            object-fit: contain; 
+            transition: transform 0.6s ease-in-out;
+            transform: scale(1.0); /* Start normal */
+        }
+
+        /* TRIGGER: Zoom Out effect on hover */
+        .scene:hover .scene-image-container img {
+            transform: scale(0.85); /* Shrink/Zoom-out on hover */
+        }
+
+        /* Start Button Overlay */
+        #start-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #start-screen button {
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 50px;
+            border: none;
+            background: white;
+            transition: transform 0.3s;
+        }
+
+        /* Mobile Version Styling */
+        @media (max-width: 768px) {
+            .scene {
+                flex-direction: column-reverse;
+                justify-content: center;
+                text-align: center;
+                padding: 20px;
+            }
+            .scene-script { padding-right: 0; margin-top: 20px; }
+            .scene-script h1 { font-size: 2rem; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <video autoplay muted loop playsinline id="video-bg">
+        <source src="My_video1.mp4" type="video/mp4">
+    </video>
+
+    <div class="overlay"></div>
+
+    <audio id="bgMusic" loop>
+        <source src="Mash-up_song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="start-screen">
+        <button onclick="initExperience()">Enter Experience</button>
+    </div>
+
+    <section class="scene">
+        <div class="scene-script">
+            <h1>The Short story with beautiful memories</h1>
+        </div>
+    </section>
+
+    <section class="scene">
+        <div class="scene-script">
+            <p>It was our first outing after the morning shift—the moment we met for the very first time, tired but smiling, sharing quiet excitement.
+That simple selfie caught the beginning of something warm, easy, and unexpectedly special.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image1.png" alt="Scene 1">
+        </div>
+    </section>
+    
+    <section class="scene">
+        <div class="scene-script">
+            <p>At arrivals, between breakfast and lunch hours, we finally slowed down and found each other again.
+               Sharing one plate between us, we laughed, stole bites, and turned a simple meal into something softly romantic.
+               In that small moment of shared food and shy smiles, closeness felt natural and unspoken.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 2.png" alt="Scene 2">
+        </div>
+    </section>
+
+     <section class="scene">
+        <div class="scene-script">
+            <p>Besant Beach welcomed us with open skies and the sound of endless waves.
+               We spent unhurried time there, walking, laughing, and letting the breeze carry our worries away.
+               Between the sea and the setting sun, we simply enjoyed being together, free and happy.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 3.png" alt="Scene 3">
+        </div>
+    </section>
+
+     <section class="scene">
+        <div class="scene-script">
+            <p>On the same beach, you celebrated my birthday with me under a quiet, moonlit sky.
+               We took a selfie together as the moon became our focus light, glowing softly and blessing us in silence.
+               It felt like even the moon wished to stay with us, holding our moment and our togetherness close.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 4.png" alt="Scene 4">
+        </div>
+    </section>
+
+     <section class="scene">
+        <div class="scene-script">
+            <p>We travelled to Mahabalipuram, wandering through rock-cut temples shaped by the Pallava dynasty’s dreams.
+               As we explored history carved in stone, I slowly realized the real wonder wasn’t the monuments at all.
+               The true princess of the journey was walking beside me, turning the past into something beautifully alive.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 5.png" alt="Scene 5">
+        </div>
+    </section>
+
+     <section class="scene">
+        <div class="scene-script">
+            <p>In the quiet glow of the church, you celebrated Christmas with me, making every moment feel gentle and meaningful.
+               Between prayers, smiles, and shared warmth, you made me feel truly special in ways words could barely hold.
+               That day wasn’t just Christmas—it became a memory of love, care, and togetherness I’ll always carry.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 6.png" alt="Scene 6">
+        </div>
+    </section>
+
+     <section class="scene">
+        <div class="scene-script">
+            <p>Behind the temple at the airport, we sat quietly, letting time slow down around us.
+               You shared your moments and stories, and I listened—though my eyes kept finding their way back to you.
+               In that simple place, words mattered less than the feeling of just being there together.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 7.png" alt="Scene 7">
+        </div>
+    </section>
+
+     <section class="scene">
+        <div class="scene-script">
+            <p>Our trip to Pondicherry became one of the most beautiful chapters we shared together.
+               We travelled alone, laughed freely, enjoyed every moment, and even fought before the end—but nothing pulled us apart.
+               We returned from that journey closer than before, choosing each other again in a quiet, romantic way.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 8.png" alt="Scene 8">
+        </div>
+    </section>
+
+     <section class="scene">
+        <div class="scene-script">
+            <p>When the Covid days began and the world slowly locked itself away, we feared it might separate us.
+               Instead, the silence and distance pulled us closer, turning longing into poetry and patience into love.
+               What felt like an ending became a gentle beginning, binding us together in a quietly romantic way.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 9.png" alt="Scene 9">
+        </div>
+    </section>
+
+     <section class="scene">
+        <div class="scene-script">
+            <p>In your cozy kitchen, we captured a joyful selfie while the world outside stood still.
+               I cooked for you during the quiet days of the pandemic, and we filled the room with warmth, laughter, and shared time.
+               A mid simple meals and soft smiles, love simmered gently, turning ordinary moments into something beautifully eternal.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 10.png" alt="Scene 10">
+        </div>
+    </section>
+
+    <section class="scene">
+        <div class="scene-script">
+            <p>During the quiet Covid days, we celebrated your birthday in our own little world, and your happiness made everything glow.
+               Later, we rode together on the bike in the early morning, sunlight brushing our faces like a soft blessing.
+               In that gentle ride and shared smiles, joy felt simple, free, and deeply ours.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 11.png" alt="Scene 11">
+        </div>
+    </section>
+
+    <section class="scene">
+        <div class="scene-script">
+            <p>We returned to this place again and again, between shifts and after long hours, just to steal a moment together.
+               All I wanted was to see your face light up with that familiar smile that made everything else fade.
+               In those stolen pauses, love quietly waited for us, patient, poetic, and endlessly warm.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 12.png" alt="Scene 12">
+        </div>
+    </section>
+
+    <section class="scene">
+        <div class="scene-script">
+            <p>The mehndi wasn’t beautiful on its own, just simple lines and fading color.
+               But when it rested on your hands, it found its purpose—your warmth, your touch, your presence gave it life.
+               In truth, the mehndi didn’t adorn you; you adorned the mehndi, making it deeper, brighter, and meaningful, the way love becomes complete only when it finds the right soul.    </p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 13.png" alt="Scene 13">
+        </div>
+    </section>
+
+    <section class="scene">
+        <div class="scene-script">
+            <p>In that quiet indoor space, we took a smiling selfie where the world felt far away.
+               Our smiles spoke softly of comfort, trust, and a love that needed no words.
+               In that simple frame, togetherness felt complete—warm, steady, and beautifully ours.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 14.png" alt="Scene 14">
+        </div>
+    </section>
+
+    <section class="scene">
+        <div class="scene-script">
+            <p>Beneath the vast night sky, we stood close and captured a selfie that marked a new beginning.
+               The air was calm, the stars felt nearer, and time seemed to pause just for us.
+               As the old year slipped away, our smiles carried gratitude, memories, and quiet promises.
+               That New Year didn’t arrive with noise or fire—it arrived softly, holding our hands, reminding us that together is how every beginning should start.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 15.png" alt="Scene 15">
+        </div>
+    </section>
+
+    <section class="scene">
+        <div class="scene-script">
+            <p>Amid vibrant lights and glowing colors, we captured a selfie on your 25th birthday.
+               Your smile shone brighter than every light around us, turning the moment magical and timeless.
+               That night, celebration wasn’t in the décor or the crowd—it lived in your joy, and in the way my heart quietly chose you all over again.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 16.png" alt="Scene 16">
+        </div>
+    </section>
+
+    <section class="scene">
+        <div class="scene-script">
+            <p>Before the Christmas tree, glowing with borrowed stars, I found my favorite light in you.
+               Among loved voices and gentle laughter, my heart learned what home truly means.
+               From that moment to every moment after, love quietly promised me this—wherever we stand, if it is with you, it is always a celebration.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 17.png" alt="Scene 17">
+        </div>
+    </section>
+
+    <section class="scene">
+        <div class="scene-script">
+            <p>At Urban Square, as evening lights warmed the food court, we paused for a quiet selfie together.
+               Amid shared flavors, soft chatter, and passing crowds, your presence made everything feel gentle and familiar.
+               In that simple evening moment, love tasted sweeter than the food—because being with you turned an ordinary place into something beautifully ours.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Image 18.png" alt="Scene 18">
+        </div>
+    </section>
+
+    <section class="scene">
+        <div class="scene-script">
+            <h1>The Finally</h1>
+            <p>At twilight on the quiet rooftop, even after the one most special to my heart walked away, I remain standing—calm, faithful, and unbroken.
+               I do not question what left; I honor what shaped me and strengthened me.
+               With steady faith and quiet courage, I trust that God removes what is not meant to stay and prepares me for what is meant to rise with me.
+               I stand alone, not empty—but ready, confident, and bold in the certainty that the right path is still unfolding before me.</p>
+        </div>
+        <div class="scene-image-container">
+            <img src="Final Image.png" alt="Scene 3">
+        </div>
+    </section>
+
+     <section class="scene">
+        <div class="scene-script">
+            <h1>Thank you for Everything</h1>
+        </div>
+    </section>
+
+    <script>
+        function initExperience() {
+            // Remove the start button
+            document.getElementById('start-screen').style.display = 'none';
+
+            // Wait 1 second, then start music and scrolling
+            setTimeout(() => {
+                const music = document.getElementById('bgMusic');
+                music.play().catch(e => console.log("Audio play blocked by browser"));
+                
+                startAutoScroll();
+            }, 1000); 
+        }
+
+        function startAutoScroll() {
+            const scenes = document.querySelectorAll('.scene');
+            let current = 0;
+
+            setInterval(() => {
+                current++;
+                if (current >= scenes.length) {
+                    current = 0; // Loops back to the top
+                }
+                
+                scenes[current].scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }, 5000); // 5 seconds per scene
+        }
+    </script>
+</body>
+</html>
